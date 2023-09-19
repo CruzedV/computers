@@ -155,8 +155,11 @@ export default {
 
 <style scoped>
 .computer-table {
-  width: 80vw;
+  min-width: 80vw;
   padding: 0 2rem 0 1rem;
+  @media (max-width: 1240px) {
+    min-width: 95vw;
+  }
 }
 .chip-group {
   display: flex;

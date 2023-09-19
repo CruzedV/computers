@@ -53,9 +53,12 @@ export default {
 
 <style scoped>
 .tree-menu {
-  width: 20vw;
+  min-width: 15vw;
   flex-direction: column;
   padding: 1rem;
+  @media (max-width: 1240px) {
+    min-width: 95vw;
+  }
 }
 .v-card {
   margin: 0.5rem;

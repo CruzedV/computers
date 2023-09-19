@@ -18,5 +18,8 @@ import TreeMenu from "@/components/Home/Tree/TreeMenu.vue"
 .home-content {
   display: flex;
   margin-top: 10vh;
+  @media (max-width: 1240px) {
+    display: block;
+  }
 }
 </style>
