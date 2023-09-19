@@ -1,7 +1,7 @@
 <script setup>
 import Header from "@/components/Header.vue"
 import ComputerTable from "@/components/Home/Table/ComputerTable.vue"
-import TreeMenu from "@/components/Home/TreeMenu.vue"
+import TreeMenu from "@/components/Home/Tree/TreeMenu.vue"
 </script>
 
 <template>
