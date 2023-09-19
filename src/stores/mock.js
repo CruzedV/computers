@@ -431,7 +431,7 @@ export const useMockData = defineStore('mock', {
       return this.computers
     },
     getTypes() {
-      return this.type
+      return this.types
     }
   }
 })

@@ -1,6 +1,6 @@
 <script setup>
 import Header from "@/components/Header.vue"
-import ComputerTable from "@/components/Home/ComputerTable.vue"
+import ComputerTable from "@/components/Home/Table/ComputerTable.vue"
 import TreeMenu from "@/components/Home/TreeMenu.vue"
 </script>
 
@@ -17,6 +17,6 @@ import TreeMenu from "@/components/Home/TreeMenu.vue"
 <style scoped>
 .home-content {
   display: flex;
-  margin-top: 5vh;
+  margin-top: 10vh;
 }
 </style>
