@@ -23,7 +23,7 @@ export default {
       const params = new URLSearchParams(window.location.search)
       params.set("endpoint_tags", this.selectedTags.join(","))
       params.set("endpoint_types", this.selectedTypes.join(","))
-      history.pushState({}, "", "/cmdb"+"?"+params.toString())
+      history.pushState({}, "", "/cmdb/"+"endpoints?"+params.toString())
       this.$emit("filtersUpdated")
     },
   },

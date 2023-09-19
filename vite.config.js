@@ -7,7 +7,6 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
-  base: "cmdb",
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

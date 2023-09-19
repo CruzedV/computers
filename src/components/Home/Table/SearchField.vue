@@ -12,7 +12,7 @@ export default {
       params.set("endpoint_search", this.search)
       params.set("endpoint_tags", params.getAll("endpoint_tags"))
       params.set("endpoint_types", params.getAll("endpoint_types"))
-      history.pushState({}, "", "/cmdb"+"?"+params.toString())
+      history.pushState({}, "", "/cmdb/"+"endpoints?"+params.toString())
       this.$emit("search", this.search)
     }
   },
