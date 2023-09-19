@@ -19,18 +19,11 @@ export default {
   },
 
   methods: {
-    clearFilters() {
-      this.selectedTags=[]
-      this.selectedTypes=[]
-      history.pushState(null, null, "/cmdb/")
-    },
     saveFilters() {
-      const params = new URLSearchParams()
-      if (this.selectedTypes.length != 0 || this.selectedTags.length != 0) {
-        params.append("endpoint_tags", this.selectedTags)
-        params.append("endpoint_types", this.selectedTypes)
-        window.location.search = params
-      }
+      const params = new URLSearchParams(window.location.search)
+      params.set("endpoint_tags", this.selectedTags.join(","))
+      params.set("endpoint_types", this.selectedTypes.join(","))
+      history.pushState({}, "", "/cmdb"+"?"+params.toString())
     }
   },
 
@@ -83,7 +76,6 @@ export default {
         </v-list-item>
         <v-list-item>
           <div class="actions">
-            <v-btn text="Очистить" @click="clearFilters()"/>
             <v-btn text="Сохранить" @click="saveFilters()"/>
           </div>
         </v-list-item>

@@ -62,6 +62,9 @@ export default {
 
   methods: {
     filterByTag() {
+    },
+    updateSearch(value) {
+      this.search = value
     }
   },
 
@@ -71,8 +74,9 @@ export default {
     },
   },
 
-  beforeMount() {
+  mounted() {
     this.computers = this.mockStore.getComputers
+    this.search = new URLSearchParams(window.location.search).getAll("endpoint_search")[0] || ""
   },
 
   components: {
@@ -98,7 +102,9 @@ export default {
 <!-- Search and filters -->
     <template v-slot:top>
       <div class="helper">
-        <SearchField/>
+        <SearchField
+          @search="updateSearch"
+        />
         <FilterMenu/>
       </div>
     </template>
