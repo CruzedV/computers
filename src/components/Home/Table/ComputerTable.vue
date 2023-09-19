@@ -17,6 +17,8 @@ export default {
       page: 1,
       itemsPerPage: 7,
       search: "",
+      selectedTags: [],
+      selectedTypes: [],
       headers: [
         {
           align: "start",
@@ -33,39 +35,55 @@ export default {
         {title: "Дата обновления", key: "updateDate"},
         {title: "Дата аудита", key: "auditDate"},
       ],
-      computers: [
-        {
-          name: "",
-          type: "vm_host",
-          location: "",
-          entity: "",
-          id: 1,
-          tags: [
-            {
-              id: 2,
-              name: "blue tag",
-              color: "#0000FF"
-            },
-            {
-              id: 3,
-              name: "green tag",
-              color: "#00FF00"
-            },
-          ],
-          createDate: Date(),
-          updateDate: Date(),
-          auditDate: Date(),
-        },
-      ],
+      computers: [],
     }
   },
 
   methods: {
-    filterByTag() {
-    },
     updateSearch(value) {
       this.search = value
-    }
+    },
+    getTypes() {
+      const types = new URLSearchParams(window.location.search).getAll("endpoint_types")
+      if (types.length != 0 && types[0] != 0) {
+        this.selectedTypes= types[0].split(",")
+      } else { this.selectedTypes = []}
+    },
+    getTags() {
+      const tags = new URLSearchParams(window.location.search).getAll("endpoint_tags")
+      if (tags.length != 0 && tags[0] != 0) {
+        this.selectedTags = tags[0].split(",")
+      } else { this.selectedTags = []}
+    },
+    setComputers() {
+      this.getTags()
+      this.getTypes()
+      const allComputers = this.mockStore.getComputers
+
+      let filteredByTags = []
+      let filteredByTypes = []
+
+      if (this.selectedTags.length > 0) {
+        filteredByTags = allComputers.filter(computer => {
+          const computerTags = computer.tags.map(tag => tag.name);
+          return this.selectedTags.every(tag => computerTags.includes(tag))
+        })
+      }
+      if (this.selectedTypes.length > 0) {
+        filteredByTypes = allComputers.filter(computer => {
+          return this.selectedTypes.includes(computer.type)
+        })
+      }
+      if (filteredByTags.length > 0 && filteredByTypes.length > 0) {
+        this.computers = filteredByTags.filter(computer => filteredByTypes.includes(computer))
+      } else if (filteredByTypes.length > 0) {
+        this.computers = filteredByTypes
+      } else if (filteredByTags.length > 0) {
+        this.computers = filteredByTags
+      } else {
+        this.computers = allComputers
+      }
+    },
   },
 
   computed: {
@@ -75,8 +93,8 @@ export default {
   },
 
   mounted() {
-    this.computers = this.mockStore.getComputers
     this.search = new URLSearchParams(window.location.search).getAll("endpoint_search")[0] || ""
+    this.setComputers()
   },
 
   components: {
@@ -91,7 +109,6 @@ export default {
 <template>
 <div class="computer-table">
   <v-data-table
-    :custom-filter="filterByTag()"
     :headers="headers"
     v-model:page="page"
     :items="computers"
@@ -105,7 +122,9 @@ export default {
         <SearchField
           @search="updateSearch"
         />
-        <FilterMenu/>
+        <FilterMenu
+          @filtersUpdated="setComputers"
+        />
       </div>
     </template>
 <!-- Paginator -->

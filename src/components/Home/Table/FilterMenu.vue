@@ -19,12 +19,13 @@ export default {
   },
 
   methods: {
-    saveFilters() {
+    updateFilters() {
       const params = new URLSearchParams(window.location.search)
       params.set("endpoint_tags", this.selectedTags.join(","))
       params.set("endpoint_types", this.selectedTypes.join(","))
       history.pushState({}, "", "/cmdb"+"?"+params.toString())
-    }
+      this.$emit("filtersUpdated")
+    },
   },
 
   beforeMount() {
@@ -76,7 +77,7 @@ export default {
         </v-list-item>
         <v-list-item>
           <div class="actions">
-            <v-btn text="Сохранить" @click="saveFilters()"/>
+            <v-btn text="Сохранить" @click="updateFilters()"/>
           </div>
         </v-list-item>
       </v-card>

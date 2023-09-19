@@ -13,7 +13,7 @@ export default {
       params.set("endpoint_tags", params.getAll("endpoint_tags"))
       params.set("endpoint_types", params.getAll("endpoint_types"))
       history.pushState({}, "", "/cmdb"+"?"+params.toString())
-      this.$emit('search', this.search)
+      this.$emit("search", this.search)
     }
   },
 
